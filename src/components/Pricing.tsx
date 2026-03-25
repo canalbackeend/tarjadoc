@@ -14,8 +14,7 @@ const plans = [
       { text: 'Tarjamento manual e automático', included: true },
       { text: 'Exportação em PDF', included: true },
       { text: 'Processamento local (seguro)', included: true },
-      { text: 'Suporte prioritário', included: false },
-      { text: 'Processamento em lote', included: false },
+      { text: 'Suporte por e-mail', included: false },
     ],
     buttonText: 'Começar Grátis',
     buttonVariant: 'outline',
@@ -23,8 +22,9 @@ const plans = [
   },
   {
     name: 'Plano Pro',
-    price: 'R$ 35,00',
+    price: 'R$ 9,99',
     period: '/mês',
+    promotional: 'R$ 35,90 por 6 meses',
     description: 'Ideal para profissionais autônomos e pequenos escritórios.',
     features: [
       { text: 'Páginas ilimitadas', included: true },
@@ -32,28 +32,10 @@ const plans = [
       { text: 'Exportação em PDF', included: true },
       { text: 'Processamento local (seguro)', included: true },
       { text: 'Suporte por e-mail', included: true },
-      { text: 'Processamento em lote', included: false },
     ],
     buttonText: 'Assinar Plano Pro',
     buttonVariant: 'primary',
     popular: true,
-  },
-  {
-    name: 'Empresarial',
-    price: 'R$ 199,00',
-    period: '/mês',
-    description: 'Para equipes e empresas com alto volume de documentos.',
-    features: [
-      { text: 'Páginas ilimitadas', included: true },
-      { text: 'Tarjamento manual e automático', included: true },
-      { text: 'Exportação em PDF', included: true },
-      { text: 'Processamento local (seguro)', included: true },
-      { text: 'Suporte prioritário 24/7', included: true },
-      { text: 'Processamento em lote (API)', included: true },
-    ],
-    buttonText: 'Falar com Vendas',
-    buttonVariant: 'outline',
-    popular: false,
   },
 ];
 
@@ -104,26 +86,15 @@ export default function Pricing() {
     <section id="precos" className="py-24 bg-slate-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl font-display font-bold text-slate-900 sm:text-4xl"
-          >
-            Planos e Preços
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="mt-4 text-xl text-slate-600 max-w-2xl mx-auto"
-          >
-            Escolha o plano ideal para a sua necessidade de segurança e agilidade.
-          </motion.p>
+          <h2 className="text-3xl font-display font-bold text-slate-900 sm:text-4xl">
+            Escolha seu plano
+          </h2>
+          <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
+            Comece gratuitamente e faça upgrade quando precisar de mais recursos.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -131,83 +102,61 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={`relative p-8 rounded-3xl border ${
-                plan.popular 
-                  ? 'bg-emerald-600 border-emerald-600 shadow-xl shadow-emerald-200 text-white transform md:-translate-y-4' 
-                  : 'bg-white border-slate-200 text-slate-900 hover:border-emerald-200 hover:shadow-lg'
-              } transition-all flex flex-col`}
+              className={`bg-white rounded-3xl p-8 ${
+                plan.popular
+                  ? 'ring-2 ring-emerald-600 shadow-xl scale-105 relative'
+                  : 'border border-slate-200 shadow-lg'
+              }`}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-0 right-0 flex justify-center">
-                  <span className="bg-emerald-200 text-emerald-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                    Mais Escolhido
-                  </span>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                  Mais Popular
                 </div>
               )}
-
-              <div className="mb-8">
-                <h3 className={`text-xl font-bold mb-2 ${plan.popular ? 'text-emerald-50' : 'text-slate-900'}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-sm h-10 ${plan.popular ? 'text-emerald-100' : 'text-slate-500'}`}>
-                  {plan.description}
-                </p>
-              </div>
-
-              <div className="mb-8">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-display font-bold">{plan.price}</span>
-                  <span className={`text-sm font-medium ${plan.popular ? 'text-emerald-200' : 'text-slate-500'}`}>
-                    {plan.period}
-                  </span>
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{plan.name}</h3>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
+                  <span className="text-slate-500">{plan.period}</span>
                 </div>
+                {plan.promotional && (
+                  <p className="text-sm text-emerald-600 font-medium mt-1">{plan.promotional}</p>
+                )}
+                <p className="text-slate-600 text-sm mt-2">{plan.description}</p>
               </div>
 
-              <ul className="space-y-4 mb-8 flex-grow">
+              <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3">
+                  <li key={i} className="flex items-center gap-3">
                     {feature.included ? (
-                      <Check className={`w-5 h-5 shrink-0 ${plan.popular ? 'text-emerald-200' : 'text-emerald-500'}`} />
+                      <Check className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                     ) : (
-                      <X className={`w-5 h-5 shrink-0 ${plan.popular ? 'text-emerald-400/50' : 'text-slate-300'}`} />
+                      <X className="w-5 h-5 text-slate-300 flex-shrink-0" />
                     )}
-                    <span className={`text-sm ${
-                      !feature.included 
-                        ? (plan.popular ? 'text-emerald-200/70 line-through' : 'text-slate-400 line-through') 
-                        : (plan.popular ? 'text-white' : 'text-slate-700')
-                    }`}>
+                    <span className={feature.included ? 'text-slate-700' : 'text-slate-400'}>
                       {feature.text}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              {plan.name === 'Plano Pro' ? (
-                <button
-                  onClick={handleSubscribe}
-                  disabled={isLoading || isPro}
-                  className={`w-full py-4 px-6 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 ${
-                    isPro 
-                      ? 'bg-emerald-100 text-emerald-500 cursor-not-allowed'
-                      : plan.popular
-                        ? 'bg-white text-emerald-600 hover:bg-emerald-50'
-                        : 'bg-slate-900 text-white hover:bg-slate-800'
-                  }`}
-                >
-                  {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (isPro ? 'EU JÁ SOU PRO' : plan.buttonText)}
-                </button>
-              ) : (
-                <a
-                  href="#ferramenta"
-                  className={`w-full py-4 px-6 rounded-xl font-bold text-center transition-all ${
-                    plan.popular
-                      ? 'bg-white text-emerald-600 hover:bg-emerald-50'
-                      : 'bg-slate-900 text-white hover:bg-slate-800'
-                  }`}
-                >
-                  {plan.buttonText}
-                </a>
-              )}
+              <button
+                onClick={handleSubscribe}
+                disabled={isLoading || (currentUser && isPro && plan.name === 'Plano Pro')}
+                className={`w-full py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
+                  plan.buttonVariant === 'primary'
+                    ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-900'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : currentUser && isPro && plan.name === 'Plano Pro' ? (
+                  'Plano Ativo'
+                ) : (
+                  plan.buttonText
+                )}
+              </button>
             </motion.div>
           ))}
         </div>
