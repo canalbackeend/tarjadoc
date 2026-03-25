@@ -14,7 +14,6 @@ const plans = [
       { text: 'Tarjamento manual e automático', included: true },
       { text: 'Exportação em PDF', included: true },
       { text: 'Processamento local (seguro)', included: true },
-      { text: 'Suporte por e-mail', included: false },
     ],
     buttonText: 'Começar Grátis',
     buttonVariant: 'outline',
@@ -36,6 +35,23 @@ const plans = [
     buttonText: 'Assinar Plano Pro',
     buttonVariant: 'primary',
     popular: true,
+  },
+  {
+    name: 'Empresarial',
+    price: 'Sob Consulta',
+    period: '',
+    description: 'Para equipes e empresas com alto volume de documentos.',
+    features: [
+      { text: 'Páginas ilimitadas', included: true },
+      { text: 'Tarjamento manual e automático', included: true },
+      { text: 'Exportação em PDF', included: true },
+      { text: 'Processamento local (seguro)', included: true },
+      { text: 'Suporte prioritário 24/7', included: true },
+      { text: 'Processamento em lote (API)', included: true },
+    ],
+    buttonText: 'Falar com Vendas',
+    buttonVariant: 'outline',
+    popular: false,
   },
 ];
 
@@ -94,7 +110,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -116,7 +132,9 @@ export default function Pricing() {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-slate-900 mb-2">{plan.name}</h3>
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
+                  <span className={`text-4xl font-bold ${plan.buttonVariant === 'primary' ? 'text-emerald-600' : 'text-slate-900'}`}>
+                    {plan.price}
+                  </span>
                   <span className="text-slate-500">{plan.period}</span>
                 </div>
                 {plan.promotional && (
