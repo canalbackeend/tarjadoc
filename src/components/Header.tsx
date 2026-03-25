@@ -31,7 +31,7 @@ export default function Header() {
             </Link>
             <Link to="/">
               <span className="text-xl font-display font-bold text-slate-900 tracking-tight">
-                Tarja<span className="text-emerald-600">DOC</span>
+                tarja<span className="text-emerald-600">DOC</span>
               </span>
             </Link>
           </div>

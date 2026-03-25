@@ -56,7 +56,7 @@ function AppContent() {
             transition={{ delay: 0.2 }}
             className="text-2xl font-display font-bold text-white tracking-tight"
           >
-            Tarja<span className="text-emerald-500">DOC</span>
+            tarja<span className="text-emerald-500">DOC</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -129,7 +129,7 @@ function HomePage() {
             Pronto para proteger seus documentos?
           </h2>
           <p className="text-emerald-50 text-xl mb-10 opacity-90">
-            Não arrisque sua privacidade enviando arquivos para servidores desconhecidos. Use o TarjaDOC e mantenha seus dados sob seu controle.
+            Não arrisque sua privacidade enviando arquivos para servidores desconhecidos. Use o tarjaDOC e mantenha seus dados sob seu controle.
           </p>
           <a 
             href="#ferramenta"

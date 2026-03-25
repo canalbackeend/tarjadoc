@@ -16,7 +16,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-6">
               <Shield className="w-8 h-8 text-emerald-500" />
               <span className="text-2xl font-display font-bold text-white tracking-tight">
-                Redigir<span className="text-emerald-500">PDF</span>
+                tarja<span className="text-emerald-500">DOC</span>
               </span>
             </div>
             <p className="max-w-sm text-lg leading-relaxed">
@@ -56,7 +56,7 @@ export default function Footer() {
           transition={{ delay: 0.2 }}
           className="pt-8 border-t border-slate-800 text-center text-sm"
         >
-          <p>© {new Date().getFullYear()} RedigirPDF. Todos os direitos reservados. Processamento 100% local.</p>
+          <p>© {new Date().getFullYear()} tarjaDOC. Todos os direitos reservados. Processamento 100% local.</p>
         </motion.div>
       </div>
     </footer>

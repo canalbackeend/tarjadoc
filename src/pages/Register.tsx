@@ -58,7 +58,7 @@ export default function Register() {
               <Shield className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-2xl font-display font-bold text-white">
-              Criar conta no <span className="text-emerald-500">TarjaDOC</span>
+              Criar conta no <span className="text-emerald-500">tarjaDOC</span>
             </h1>
             <p className="text-slate-400 mt-2 text-sm">
               Comece a proteger seus documentos agora

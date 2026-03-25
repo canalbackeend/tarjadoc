@@ -14,9 +14,9 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
   const resetUrl = `${process.env.APP_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
 
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"TarjaDOC" <noreply@tarjadoc.beend.tech>',
+    from: process.env.SMTP_FROM || '"tarjaDOC" <noreply@tarjadoc.beend.tech>',
     to: email,
-    subject: 'Recuperação de Senha - TarjaDOC',
+    subject: 'Recuperação de Senha - tarjaDOC',
     html: `
       <!DOCTYPE html>
       <html>
@@ -36,10 +36,10 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
         <body>
           <div class="container">
             <div class="logo">
-              <span>TarjaDOC</span>
+              <span>tarjaDOC</span>
             </div>
             <h1>Recuperação de Senha</h1>
-            <p>Você solicitou a recuperação de senha da sua conta TarjaDOC.</p>
+            <p>Você solicitou a recuperação de senha da sua conta tarjaDOC.</p>
             <p>Clique no botão abaixo para criar uma nova senha:</p>
             <div style="text-align: center;">
               <a href="${resetUrl}" class="button">Alterar Senha</a>
@@ -49,7 +49,7 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
             <p>Este link expira em 1 hora.</p>
             <p>Se você não solicitou esta recuperação, ignore este email.</p>
             <div class="footer">
-              <p>© 2026 TarjaDOC - Todos os direitos reservados</p>
+              <p>© 2026 tarjaDOC - Todos os direitos reservados</p>
             </div>
           </div>
         </body>

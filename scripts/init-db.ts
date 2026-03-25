@@ -10,7 +10,7 @@ dotenv.config();
 const { Pool } = pg;
 
 async function initDatabase() {
-  console.log('Inicializando banco de dados TarjaDOC...\n');
+  console.log('Inicializando banco de dados tarjaDOC...\n');
 
   const pool = new Pool({
     host: '127.0.0.1',

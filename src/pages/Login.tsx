@@ -45,7 +45,7 @@ export default function Login() {
               <Shield className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-2xl font-display font-bold text-white">
-              Entrar no <span className="text-emerald-500">TarjaDOC</span>
+              Entrar no <span className="text-emerald-500">tarjaDOC</span>
             </h1>
             <p className="text-slate-400 mt-2 text-sm">
               Acesse sua conta para proteger seus documentos

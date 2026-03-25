@@ -243,7 +243,7 @@ export default function Admin() {
                 <Shield className="w-5 h-5 text-white" />
               </div>
               <h1 className="text-xl font-display font-bold text-white">
-                Painel Admin <span className="text-emerald-500">TarjaDOC</span>
+                Painel Admin <span className="text-emerald-500">tarjaDOC</span>
               </h1>
             </div>
             <button
