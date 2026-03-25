@@ -2,7 +2,6 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import Stripe from "stripe";
 import cors from "cors";
-import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -13,8 +12,6 @@ import { findUserByUid, updateUserProStatus, updateUserStripeCustomerId, findUse
 import { initDatabaseAuto } from "./src/server/db-init";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-dotenv.config();
 
 async function startServer() {
   await initDatabaseAuto();

@@ -1,7 +1,4 @@
 import pg from 'pg';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const { Pool } = pg;
 
@@ -9,13 +6,15 @@ function getPoolConfig() {
   const url = process.env.DATABASE_URL;
   
   if (url) {
+    console.log('🔗 Using DATABASE_URL from environment');
     return { connectionString: url };
   }
   
+  console.log('⚠️  DATABASE_URL not found, using default config');
   return {
     host: process.env.PGHOST || '127.0.0.1',
     port: parseInt(process.env.PGPORT || '5432'),
-    user: process.env.PGUSER || 'marciocristiano',
+    user: process.env.PGUSER || 'postgres',
     password: process.env.PGPASSWORD || '',
     database: process.env.PGDATABASE || 'tarjadoc',
   };
