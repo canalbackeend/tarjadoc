@@ -2,19 +2,13 @@ import pg from 'pg';
 
 const { Pool } = pg;
 
-console.log('🔧 Checking environment variables...');
-
-console.log('🔗 DATABASE_URL:', process.env.DATABASE_URL ? 'SET' : 'NOT SET');
-
 function getPoolConfig() {
   const url = process.env.DATABASE_URL;
   
   if (url) {
-    console.log('✅ Using DATABASE_URL from environment');
     return { connectionString: url };
   }
   
-  console.log('⚠️  DATABASE_URL not found, using default config');
   return {
     host: process.env.PGHOST || 'localhost',
     port: parseInt(process.env.PGPORT || '5432'),

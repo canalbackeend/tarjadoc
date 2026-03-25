@@ -11,14 +11,25 @@ export async function initDatabaseAuto() {
     const statements = sql.split(';').filter(s => s.trim() && !s.trim().startsWith('--'));
     
     for (const statement of statements) {
-      if (statement.trim()) {
+      if (statement.trim() && !statement.trim().startsWith('CREATE EXTENSION')) {
         try {
           await query(statement + ';');
-        } catch (e) {
-          // Ignora erros de tabelas já existentes
+          console.log('  ✅ Created:', statement.substring(0, 50).replace(/\s+/g, ' '));
+        } catch (e: any) {
+          if (e.code !== '42P07') { // table already exists
+            console.log('  ⚠️ Error:', e.message?.substring(0, 80));
+          }
         }
       }
     }
+
+    // Create extension separately
+    try {
+      await query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
+    } catch (e) {
+      // ignore
+    }
+    
     console.log('✅ Tabelas verificadas/criadas');
 
     const adminEmail = process.env.ADMIN_EMAIL || 'admin@tarjadoc.com';
