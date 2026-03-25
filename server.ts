@@ -10,14 +10,17 @@ import authRoutes from "./src/server/routes/auth";
 import adminRoutes from "./src/server/routes/admin";
 import recoveryRoutes from "./src/server/routes/recovery";
 import { findUserByUid, updateUserProStatus, updateUserStripeCustomerId, findUserByStripeCustomerId, findUserByEmail } from "./src/server/auth";
+import { initDatabaseAuto } from "./src/server/db-init";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-dotenv.config({ path: path.resolve(__dirname, ".env.local") });
+dotenv.config();
 
 async function startServer() {
+  await initDatabaseAuto();
+  
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   app.use(cors());
   app.use(express.json());
