@@ -30,8 +30,8 @@ APP_URL=https://seudominio.com
 PORT=3000
 
 # Admin (opcional)
-ADMIN_EMAIL=admin@seudominio.com
-ADMIN_PASSWORD=admin123
+ADMIN_EMAIL=adm@tarjadoc.tech
+ADMIN_PASSWORD=@Fbtv!9061!?
 ```
 
 ## Deploy no Coolify
