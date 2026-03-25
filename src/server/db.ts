@@ -2,23 +2,22 @@ import pg from 'pg';
 
 const { Pool } = pg;
 
-console.log('🔧 Initializing database connection...');
-console.log('📋 Environment variables:');
-console.log('  DATABASE_URL:', process.env.DATABASE_URL ? 'SET' : 'NOT SET');
-console.log('  PGHOST:', process.env.PGHOST || 'NOT SET');
-console.log('  PGPORT:', process.env.PGPORT || 'NOT SET');
-console.log('  PGUSER:', process.env.PGUSER || 'NOT SET');
-console.log('  PGDATABASE:', process.env.PGDATABASE || 'NOT SET');
+console.log('🔧 Checking environment variables...');
+const envKeys = Object.keys(process.env).filter(k => k.includes('DATABASE') || k.includes('PG') || k.includes('POSTGRES'));
+console.log('📋 Database-related vars:', envKeys);
+
+console.log('🔗 DATABASE_URL:', process.env.DATABASE_URL ? 'SET (' + process.env.DATABASE_URL.substring(0, 30) + '...)' : 'NOT SET');
 
 function getPoolConfig() {
   const url = process.env.DATABASE_URL;
   
   if (url) {
-    console.log('🔗 Using DATABASE_URL from environment');
+    console.log('✅ Using DATABASE_URL from environment');
     return { connectionString: url, ssl: { rejectUnauthorized: false } };
   }
   
-  console.log('⚠️  DATABASE_URL not found, using individual config');
+  console.log('⚠️  DATABASE_URL not found, using default config');
+  console.log('📋 Fallback - PGHOST:', process.env.PGHOST || 'localhost');
   return {
     host: process.env.PGHOST || 'localhost',
     port: parseInt(process.env.PGPORT || '5432'),
