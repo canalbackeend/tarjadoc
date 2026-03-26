@@ -35,10 +35,14 @@ export default function Admin() {
   
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
+  const [showResetAdminModal, setShowResetAdminModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newAdminEmail, setNewAdminEmail] = useState('');
   const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [resetAdminId, setResetAdminId] = useState<number | null>(null);
+  const [resetAdminEmail, setResetAdminEmail] = useState('');
+  const [resetNewPassword, setResetNewPassword] = useState('');
   
   const navigate = useNavigate();
   const token = localStorage.getItem('adminToken');
@@ -221,6 +225,43 @@ export default function Admin() {
     } finally {
       setActionLoading(null);
     }
+  };
+
+  const handleResetAdminPassword = async () => {
+    if (!resetAdminId) return;
+    setActionLoading('reset-admin');
+    setError('');
+    setSuccess('');
+    try {
+      const response = await fetch('/api/admin/reset-admin-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ adminId: resetAdminId, newPassword: resetNewPassword })
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error);
+      }
+      setSuccess('Senha do administrador alterada com sucesso');
+      setShowResetAdminModal(false);
+      setResetAdminId(null);
+      setResetAdminEmail('');
+      setResetNewPassword('');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const openResetAdminModal = (admin: Admin) => {
+    setResetAdminId(admin.id);
+    setResetAdminEmail(admin.email);
+    setResetNewPassword('');
+    setShowResetAdminModal(true);
   };
 
   const handleLogout = () => {
@@ -458,6 +499,13 @@ export default function Admin() {
                           Criado em {new Date(admin.createdAt).toLocaleDateString('pt-BR')}
                         </div>
                       </div>
+                      <button
+                        onClick={() => openResetAdminModal(admin)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm transition-colors"
+                      >
+                        <Key className="w-4 h-4" />
+                        Alterar Senha
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -510,7 +558,7 @@ export default function Admin() {
         </div>
       )}
 
-      {showAdminModal && (
+{showAdminModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 w-full max-w-md">
             <h3 className="text-lg font-semibold text-white mb-4">Novo Administrador</h3>
@@ -547,6 +595,49 @@ export default function Admin() {
                 className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg disabled:opacity-50"
               >
                 {actionLoading === 'create-admin' ? 'Criando...' : 'Criar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showResetAdminModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 w-full max-w-md">
+            <h3 className="text-lg font-semibold text-white mb-4">Alterar Senha do Admin</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm text-slate-300 mb-1">Administrador</label>
+                <input
+                  type="text"
+                  value={resetAdminEmail}
+                  disabled
+                  className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-400"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-slate-300 mb-1">Nova Senha</label>
+                <input
+                  type="password"
+                  value={resetNewPassword}
+                  onChange={(e) => setResetNewPassword(e.target.value)}
+                  className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setShowResetAdminModal(false)}
+                className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleResetAdminPassword}
+                disabled={actionLoading === 'reset-admin'}
+                className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg disabled:opacity-50"
+              >
+                {actionLoading === 'reset-admin' ? 'Alterando...' : 'Alterar'}
               </button>
             </div>
           </div>

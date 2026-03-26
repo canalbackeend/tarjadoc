@@ -243,4 +243,31 @@ router.post('/change-password', async (req, res) => {
   }
 });
 
+router.post('/reset-admin-password', async (req, res) => {
+  try {
+    const { adminId, newPassword } = req.body;
+
+    if (!adminId || !newPassword) {
+      return res.status(400).json({ error: 'ID do admin e nova senha são obrigatórios' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'Nova senha deve ter pelo menos 6 caracteres' });
+    }
+
+    const admin = await findAdminById(adminId);
+    if (!admin) {
+      return res.status(404).json({ error: 'Administrador não encontrado' });
+    }
+
+    const newPasswordHash = await hashPassword(newPassword);
+    await updateAdminPassword(admin.id, newPasswordHash);
+
+    res.json({ message: 'Senha do administrador alterada com sucesso' });
+  } catch (error: any) {
+    console.error('Reset admin password error:', error);
+    res.status(500).json({ error: 'Erro ao alterar senha do administrador' });
+  }
+});
+
 export default router;
